@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\crypto">
+      <UniqueIdentifier>{c1d55589-67dc-4307-a35e-fa41bcd37707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\crypto\x509">
+      <UniqueIdentifier>{cc04ac74-9891-4b75-a840-3570f2e5eeef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\crypto\x520">
+      <UniqueIdentifier>{b0b6d97b-4c2e-4e1a-96ed-8795be4790f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\crypto\pkcs7">
+      <UniqueIdentifier>{ac6cd077-bba0-4011-9e9e-654c27643563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\crypto\pkcs7\authenticode">
+      <UniqueIdentifier>{fc0cddbf-99d4-4869-b346-05eafc3991a0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="der_decode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="decode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\crypto_common_spec.h">
+      <Filter>Header Files\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\crypto_common_types.h">
+      <Filter>Header Files\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\algorithms.h">
+      <Filter>Header Files\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\x509\extensions_spec.h">
+      <Filter>Header Files\crypto\x509</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\x509\extensions_types.h">
+      <Filter>Header Files\crypto\x509</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\x509\spec.h">
+      <Filter>Header Files\crypto\x509</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\x509\types.h">
+      <Filter>Header Files\crypto\x509</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\x520\spec.h">
+      <Filter>Header Files\crypto\x520</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\x520\types.h">
+      <Filter>Header Files\crypto\x520</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\pkcs7\authenticode\spec.h">
+      <Filter>Header Files\crypto\pkcs7\authenticode</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\pkcs7\authenticode\types.h">
+      <Filter>Header Files\crypto\pkcs7\authenticode</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
