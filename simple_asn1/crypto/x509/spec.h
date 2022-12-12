@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 #pragma once
 
 #include "simple_asn1/crypto/crypto_common_spec.h"
