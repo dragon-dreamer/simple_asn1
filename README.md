@@ -304,7 +304,8 @@ SimpleAsn1 can parse more advanced ASN.1 structures, like `X.509` or `PKCS #7`.
 - X509Reader is a SimpleAsn1-based X.509 DER parser, which parses `base64` representations of certificate files (usually stored with `.cer` or `.ctr` extensions).
 
 <details>
-<summary>**X509Reader output for the `google.com` website certificate (click)**</summary>
+<summary><strong>X509Reader output for the `google.com` website certificate (click)</strong></summary>
+
 ```
 Signature algorithm: 1.2.840.113549.1.1.11 SHA256 with RSA
 PKI algorithm: 1.2.840.10045.2.1 EC public key
