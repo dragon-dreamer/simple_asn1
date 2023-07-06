@@ -1159,14 +1159,14 @@ struct string_decoder<DecodeState, Options, ParentContexts, StringSpec, SpecOpti
 		{
 			while (len)
 			{
-				std::make_unsigned_t<Char> value{};
+				std::make_unsigned_t<Char> char_value{};
 				for (std::size_t i = 0; i != sizeof(Char); ++i)
 				{
 					if constexpr (sizeof(Char) > 1u)
-						value <<= 8u;
-					value |= static_cast<decltype(value)>(*state.begin++);
+						char_value <<= 8u;
+					char_value |= static_cast<decltype(char_value)>(*state.begin++);
 				}
-				*ptr++ = static_cast<Char>(value);
+				*ptr++ = static_cast<Char>(char_value);
 				len -= sizeof(Char);
 			}
 		}
