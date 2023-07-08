@@ -75,5 +75,11 @@
     <ClInclude Include="include\simple_asn1\crypto\x520\types.h">
       <Filter>Header Files\crypto\x520</Filter>
     </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\types.h">
+      <Filter>Header Files\crypto\pkcs7</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\spec.h">
+      <Filter>Header Files\crypto\pkcs7</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
