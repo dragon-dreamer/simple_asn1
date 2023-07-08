@@ -17,11 +17,11 @@ target_include_directories(Tests PRIVATE
 	"${CMAKE_SOURCE_DIR}")
 
 if (MSVC)
-    target_compile_options(Tests PRIVATE /bigobj /W3)
+	target_compile_options(Tests PRIVATE /bigobj /W3)
 else()
-    target_compile_options(Tests PRIVATE -Wall -Wextra -pedantic)
+	target_compile_options(Tests PRIVATE -Wall -Wextra -pedantic)
 endif()
 
-target_link_libraries(Tests INTERFACE SimpleAsn1Lib PUBLIC gtest_main PUBLIC gmock_main)
+target_link_libraries(Tests PRIVATE gtest_main gmock_main SimpleAsn1Lib)
 
 add_test(NAME SimpleAsn1Tests COMMAND Tests)

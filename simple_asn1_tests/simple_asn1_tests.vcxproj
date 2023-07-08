@@ -77,7 +77,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Libs\boost_1_78_0;$(SolutionDir)\googletest\googletest\include\;$(SolutionDir)\googletest\googletest\;$(SolutionDir)\googletest\googlemock\include\;$(SolutionDir)\googletest\googlemock\;$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libs\boost_1_78_0;$(SolutionDir)\googletest\googletest\include\;$(SolutionDir)\googletest\googletest\;$(SolutionDir)\googletest\googlemock\include\;$(SolutionDir)\googletest\googlemock\;$(SolutionDir)\simple_asn1\include\</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -94,7 +94,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Libs\boost_1_78_0;$(SolutionDir)\googletest\googletest\include\;$(SolutionDir)\googletest\googletest\;$(SolutionDir)\googletest\googlemock\include\;$(SolutionDir)\googletest\googlemock\;$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libs\boost_1_78_0;$(SolutionDir)\googletest\googletest\include\;$(SolutionDir)\googletest\googletest\;$(SolutionDir)\googletest\googlemock\include\;$(SolutionDir)\googletest\googlemock\;$(SolutionDir)\simple_asn1\include\</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -111,7 +111,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Libs\boost_1_78_0;$(SolutionDir)\googletest\googletest\include\;$(SolutionDir)\googletest\googletest\;$(SolutionDir)\googletest\googlemock\include\;$(SolutionDir)\googletest\googlemock\;$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libs\boost_1_78_0;$(SolutionDir)\googletest\googletest\include\;$(SolutionDir)\googletest\googletest\;$(SolutionDir)\googletest\googlemock\include\;$(SolutionDir)\googletest\googlemock\;$(SolutionDir)\simple_asn1\include\</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -128,7 +128,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Libs\boost_1_78_0;$(SolutionDir)\googletest\googletest\include\;$(SolutionDir)\googletest\googletest\;$(SolutionDir)\googletest\googlemock\include\;$(SolutionDir)\googletest\googlemock\;$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libs\boost_1_78_0;$(SolutionDir)\googletest\googletest\include\;$(SolutionDir)\googletest\googletest\;$(SolutionDir)\googletest\googlemock\include\;$(SolutionDir)\googletest\googlemock\;$(SolutionDir)\simple_asn1\include\</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>

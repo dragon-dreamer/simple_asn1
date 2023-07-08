@@ -20,4 +20,4 @@ endif()
 target_include_directories(X509Reader PRIVATE
 	"${Boost_INCLUDE_DIRS}"
 	"${CMAKE_SOURCE_DIR}")
-target_link_libraries(X509Reader INTERFACE SimpleAsn1Lib)
+target_link_libraries(X509Reader PRIVATE SimpleAsn1Lib)

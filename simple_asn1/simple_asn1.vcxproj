@@ -151,21 +151,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="crypto\crypto_common_spec.h" />
-    <ClInclude Include="crypto\crypto_common_types.h" />
-    <ClInclude Include="crypto\algorithms.h" />
-    <ClInclude Include="crypto\pkcs7\authenticode\spec.h" />
-    <ClInclude Include="crypto\pkcs7\authenticode\types.h" />
-    <ClInclude Include="crypto\x509\extensions_spec.h" />
-    <ClInclude Include="crypto\x509\extensions_types.h" />
-    <ClInclude Include="crypto\x509\spec.h" />
-    <ClInclude Include="crypto\x509\types.h" />
-    <ClInclude Include="crypto\x520\spec.h" />
-    <ClInclude Include="crypto\x520\types.h" />
-    <ClInclude Include="decode.h" />
-    <ClInclude Include="der_decode.h" />
-    <ClInclude Include="spec.h" />
-    <ClInclude Include="types.h" />
+    <ClInclude Include="include\simple_asn1\crypto\algorithms.h" />
+    <ClInclude Include="include\simple_asn1\crypto\crypto_common_spec.h" />
+    <ClInclude Include="include\simple_asn1\crypto\crypto_common_types.h" />
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\authenticode\spec.h" />
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\authenticode\types.h" />
+    <ClInclude Include="include\simple_asn1\crypto\x509\extensions_spec.h" />
+    <ClInclude Include="include\simple_asn1\crypto\x509\extensions_types.h" />
+    <ClInclude Include="include\simple_asn1\crypto\x509\spec.h" />
+    <ClInclude Include="include\simple_asn1\crypto\x509\types.h" />
+    <ClInclude Include="include\simple_asn1\crypto\x520\spec.h" />
+    <ClInclude Include="include\simple_asn1\crypto\x520\types.h" />
+    <ClInclude Include="include\simple_asn1\decode.h" />
+    <ClInclude Include="include\simple_asn1\der_decode.h" />
+    <ClInclude Include="include\simple_asn1\spec.h" />
+    <ClInclude Include="include\simple_asn1\types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

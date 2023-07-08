@@ -10,4 +10,5 @@ find_package(Boost 1.75 REQUIRED)
 
 add_library(SimpleAsn1Lib INTERFACE)
 
-target_include_directories(SimpleAsn1Lib INTERFACE .)
+target_include_directories(SimpleAsn1Lib
+	INTERFACE include "${Boost_INCLUDE_DIRS}")

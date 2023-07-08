@@ -30,50 +30,50 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="der_decode.h">
+    <ClInclude Include="include\simple_asn1\decode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="types.h">
+    <ClInclude Include="include\simple_asn1\der_decode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="spec.h">
+    <ClInclude Include="include\simple_asn1\spec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="decode.h">
+    <ClInclude Include="include\simple_asn1\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="crypto\crypto_common_spec.h">
+    <ClInclude Include="include\simple_asn1\crypto\algorithms.h">
       <Filter>Header Files\crypto</Filter>
     </ClInclude>
-    <ClInclude Include="crypto\crypto_common_types.h">
+    <ClInclude Include="include\simple_asn1\crypto\crypto_common_spec.h">
       <Filter>Header Files\crypto</Filter>
     </ClInclude>
-    <ClInclude Include="crypto\algorithms.h">
+    <ClInclude Include="include\simple_asn1\crypto\crypto_common_types.h">
       <Filter>Header Files\crypto</Filter>
     </ClInclude>
-    <ClInclude Include="crypto\x509\extensions_spec.h">
-      <Filter>Header Files\crypto\x509</Filter>
-    </ClInclude>
-    <ClInclude Include="crypto\x509\extensions_types.h">
-      <Filter>Header Files\crypto\x509</Filter>
-    </ClInclude>
-    <ClInclude Include="crypto\x509\spec.h">
-      <Filter>Header Files\crypto\x509</Filter>
-    </ClInclude>
-    <ClInclude Include="crypto\x509\types.h">
-      <Filter>Header Files\crypto\x509</Filter>
-    </ClInclude>
-    <ClInclude Include="crypto\x520\spec.h">
-      <Filter>Header Files\crypto\x520</Filter>
-    </ClInclude>
-    <ClInclude Include="crypto\x520\types.h">
-      <Filter>Header Files\crypto\x520</Filter>
-    </ClInclude>
-    <ClInclude Include="crypto\pkcs7\authenticode\spec.h">
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\authenticode\spec.h">
       <Filter>Header Files\crypto\pkcs7\authenticode</Filter>
     </ClInclude>
-    <ClInclude Include="crypto\pkcs7\authenticode\types.h">
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\authenticode\types.h">
       <Filter>Header Files\crypto\pkcs7\authenticode</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\x509\extensions_spec.h">
+      <Filter>Header Files\crypto\x509</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\x509\extensions_types.h">
+      <Filter>Header Files\crypto\x509</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\x509\spec.h">
+      <Filter>Header Files\crypto\x509</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\x509\types.h">
+      <Filter>Header Files\crypto\x509</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\x520\spec.h">
+      <Filter>Header Files\crypto\x520</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\x520\types.h">
+      <Filter>Header Files\crypto\x520</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
