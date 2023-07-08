@@ -848,6 +848,43 @@ TYPED_TEST(Asn1TestFixture, ExplicitNestedSequenceAllFieldsWithPointers)
 	EXPECT_TRUE(value.nested->value.v3);
 }
 
+TYPED_TEST(Asn1TestFixture, ExplicitNestedSequenceAllFieldsWithRawData)
+{
+	struct sequence_type_with_raw_data
+	{
+		asn1::with_raw_data<std::vector<TestFixture::byte_type>, bool> v1;
+		std::optional<std::nullptr_t> v2;
+		std::optional<asn1::with_raw_data<
+			std::vector<TestFixture::byte_type>, nested_sequence_type>> nested;
+	};
+
+	buffer_wrapper_base<typename TestFixture::byte_type,
+		0x30u, 0x12u,
+			0x01u, 0x01u, 0xffu,
+			0x05u, 0x00u,
+			0x30u, 0x0bu,
+				0xa5u, 0x03u, 0x02u, 0x01u, 0x55u,
+				0x02u, 0x01u, 0x78u,
+				0x01u, 0x01u, 0xffu
+	> wrapper;
+	sequence_type_with_raw_data value{};
+	ASSERT_NO_THROW((asn1::der::decode<sequence_spec>(
+		wrapper.vec.begin(), wrapper.vec.end(), value)));
+
+	EXPECT_TRUE(value.v1.value);
+	EXPECT_TRUE(std::equal(value.v1.raw.begin(), value.v1.raw.end(),
+		wrapper.vec.begin() + 2));
+
+	EXPECT_TRUE(value.v2);
+	ASSERT_TRUE(value.nested);
+	EXPECT_TRUE(std::equal(value.nested->raw.begin(),
+		value.nested->raw.end(), wrapper.vec.begin() + 7));
+
+	EXPECT_EQ(value.nested->value.v1, 0x55u);
+	EXPECT_EQ(value.nested->value.v2, 0x78u);
+	EXPECT_TRUE(value.nested->value.v3);
+}
+
 namespace
 {
 template<typename ByteType>

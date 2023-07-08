@@ -170,4 +170,11 @@ struct with_pointers
 	ByteType* end;
 };
 
+template<typename RangeType, typename Value>
+struct with_raw_data
+{
+	Value value;
+	RangeType raw;
+};
+
 } //namespace asn1

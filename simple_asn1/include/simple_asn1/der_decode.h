@@ -163,6 +163,37 @@ struct select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
 	}
 };
 
+template<typename DecodeState, typename Options,
+	typename ParentContexts, typename Spec, typename RangeType, typename Value>
+struct select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
+	with_raw_data<RangeType, Value>>
+{
+	using base_der_decoder_type = select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
+		Value>;
+	using with_raw_data_value_type = with_raw_data<RangeType, Value>;
+
+	static constexpr bool can_decode(tag_type tag)
+	{
+		return base_der_decoder_type::can_decode(tag);
+	}
+
+	static constexpr void decode_explicit(with_raw_data_value_type& value,
+		const DecodeState& state, length_type length)
+	{
+		auto old_begin = state.begin;
+		base_der_decoder_type::decode_explicit(value.value, state, length);
+		value.raw = RangeType{ old_begin, state.begin };
+	}
+
+	static constexpr void decode_implicit(length_type length,
+		with_raw_data_value_type& value, const DecodeState& state)
+	{
+		auto old_begin = state.begin;
+		base_der_decoder_type::decode_implicit(length, value.value, state);
+		value.raw = RangeType{ old_begin, state.begin };
+	}
+};
+
 template<typename Decoder>
 struct der_decoder_base final {};
 

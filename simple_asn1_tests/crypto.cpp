@@ -1235,9 +1235,7 @@ constexpr auto pkcs7 = std::to_array<std::uint8_t>({
 
 TEST(AuthenticodePkcs7, Parse)
 {
-	using value_type = asn1::crypto::pkcs7::authenticode::content_info<
-		const std::uint8_t,
-		std::span<const std::uint8_t>>;
+	using value_type = asn1::crypto::pkcs7::authenticode::content_info<std::span<const std::uint8_t>>;
 	value_type result;
 	ASSERT_NO_THROW(asn1::der::decode<asn1::spec::crypto::pkcs7::authenticode::content_info>(
 		pkcs7.cbegin(), pkcs7.cend(), result));
