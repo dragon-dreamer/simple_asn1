@@ -107,21 +107,21 @@ struct signer_info
 template<typename RangeType>
 using signer_infos_type = std::vector<signer_info<RangeType>>;
 
-template<typename RangeType>
+template<typename BufferIterator, typename RangeType>
 struct signed_data
 {
 	std::int32_t version;
 	algorithm_identifiers_type<RangeType> digest_algorithms;
-	encap_content_info<RangeType> content_info;
+	with_offset<BufferIterator, encap_content_info<RangeType>> content_info;
 	std::optional<extended_certificates_and_certificates_type<RangeType>> certificates;
 	//std::optional<RangeType> crls; //Not used
 	signer_infos_type<RangeType> signer_infos;
 };
 
-template<typename RangeType>
+template<typename BufferIterator, typename RangeType>
 struct content_info
 {
 	object_identifier_type content_type;
-	signed_data<RangeType> data;
+	signed_data<BufferIterator, RangeType> data;
 };
 } //namespace asn1::crypto::pkcs7::authenticode
