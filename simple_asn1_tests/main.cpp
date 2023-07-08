@@ -774,13 +774,13 @@ TYPED_TEST(Asn1TestFixture, ExplicitNestedSequenceWrongType2)
 		Throws<asn1::parse_error>(HasExactContext("sequence_spec/nested_sequence_spec/int5")));
 }
 
-TYPED_TEST(Asn1TestFixture, ExplicitNestedSequenceAllFieldsWithOffset)
+TYPED_TEST(Asn1TestFixture, ExplicitNestedSequenceAllFieldsWithIterators)
 {
-	struct sequence_type_with_offset
+	struct sequence_type_with_iterators
 	{
-		asn1::with_offset<std::vector<typename TestFixture::byte_type>::iterator, bool> v1;
+		asn1::with_iterators<std::vector<typename TestFixture::byte_type>::iterator, bool> v1;
 		std::optional<std::nullptr_t> v2;
-		std::optional<asn1::with_offset<
+		std::optional<asn1::with_iterators<
 			std::vector<typename TestFixture::byte_type>::iterator, nested_sequence_type>> nested;
 	};
 
@@ -793,7 +793,7 @@ TYPED_TEST(Asn1TestFixture, ExplicitNestedSequenceAllFieldsWithOffset)
 				0x02u, 0x01u, 0x78u,
 				0x01u, 0x01u, 0xffu
 	> wrapper;
-	sequence_type_with_offset value{};
+	sequence_type_with_iterators value{};
 	ASSERT_NO_THROW((asn1::der::decode<sequence_spec>(
 		wrapper.vec.begin(), wrapper.vec.end(), value)));
 
@@ -805,6 +805,43 @@ TYPED_TEST(Asn1TestFixture, ExplicitNestedSequenceAllFieldsWithOffset)
 	ASSERT_TRUE(value.nested);
 	EXPECT_EQ(value.nested->begin, wrapper.vec.begin() + 7);
 	EXPECT_EQ(value.nested->end, wrapper.vec.end());
+
+	EXPECT_EQ(value.nested->value.v1, 0x55u);
+	EXPECT_EQ(value.nested->value.v2, 0x78u);
+	EXPECT_TRUE(value.nested->value.v3);
+}
+
+TYPED_TEST(Asn1TestFixture, ExplicitNestedSequenceAllFieldsWithPointers)
+{
+	struct sequence_type_with_pointers
+	{
+		asn1::with_pointers<typename TestFixture::byte_type, bool> v1;
+		std::optional<std::nullptr_t> v2;
+		std::optional<asn1::with_pointers<
+			typename TestFixture::byte_type, nested_sequence_type>> nested;
+	};
+
+	buffer_wrapper_base<typename TestFixture::byte_type,
+		0x30u, 0x12u,
+			0x01u, 0x01u, 0xffu,
+			0x05u, 0x00u,
+			0x30u, 0x0bu,
+				0xa5u, 0x03u, 0x02u, 0x01u, 0x55u,
+				0x02u, 0x01u, 0x78u,
+				0x01u, 0x01u, 0xffu
+	> wrapper;
+	sequence_type_with_pointers value{};
+	ASSERT_NO_THROW((asn1::der::decode<sequence_spec>(
+		wrapper.vec.begin(), wrapper.vec.end(), value)));
+
+	EXPECT_TRUE(value.v1.value);
+	EXPECT_EQ(value.v1.begin, wrapper.vec.data() + 2);
+	EXPECT_EQ(value.v1.end, wrapper.vec.data() + 2 + 3);
+
+	EXPECT_TRUE(value.v2);
+	ASSERT_TRUE(value.nested);
+	EXPECT_EQ(value.nested->begin, wrapper.vec.data() + 7);
+	EXPECT_EQ(value.nested->end, wrapper.vec.data() + wrapper.vec.size());
 
 	EXPECT_EQ(value.nested->value.v1, 0x55u);
 	EXPECT_EQ(value.nested->value.v2, 0x78u);

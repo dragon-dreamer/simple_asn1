@@ -155,11 +155,19 @@ template<typename Container>
 }
 
 template<typename BufferIterator, typename Value>
-struct with_offset
+struct with_iterators
 {
 	Value value;
 	BufferIterator begin;
 	BufferIterator end;
+};
+
+template<typename ByteType, typename Value>
+struct with_pointers
+{
+	Value value;
+	ByteType* begin;
+	ByteType* end;
 };
 
 } //namespace asn1

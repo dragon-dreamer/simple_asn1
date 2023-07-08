@@ -102,18 +102,18 @@ struct select_nested_der_decoder
 template<typename DecodeState, typename Options,
 	typename ParentContexts, typename Spec, typename Iterator, typename Value>
 struct select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
-	with_offset<Iterator, Value>>
+	with_iterators<Iterator, Value>>
 {
 	using base_der_decoder_type = select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
 		Value>;
-	using with_offset_value_type = with_offset<Iterator, Value>;
+	using with_iterators_value_type = with_iterators<Iterator, Value>;
 
 	static constexpr bool can_decode(tag_type tag)
 	{
 		return base_der_decoder_type::can_decode(tag);
 	}
 
-	static constexpr void decode_explicit(with_offset_value_type& value,
+	static constexpr void decode_explicit(with_iterators_value_type& value,
 		const DecodeState& state, length_type length)
 	{
 		value.begin = state.begin;
@@ -122,11 +122,44 @@ struct select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
 	}
 
 	static constexpr void decode_implicit(length_type length,
-		with_offset_value_type& value, const DecodeState& state)
+		with_iterators_value_type& value, const DecodeState& state)
 	{
 		value.begin = state.begin;
 		base_der_decoder_type::decode_implicit(length, value.value, state);
 		value.end = state.begin;
+	}
+};
+
+template<typename DecodeState, typename Options,
+	typename ParentContexts, typename Spec, typename ByteType, typename Value>
+struct select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
+	with_pointers<ByteType, Value>>
+{
+	using base_der_decoder_type = select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
+		Value>;
+	using with_pointers_value_type = with_pointers<ByteType, Value>;
+
+	static constexpr bool can_decode(tag_type tag)
+	{
+		return base_der_decoder_type::can_decode(tag);
+	}
+
+	static constexpr void decode_explicit(with_pointers_value_type& value,
+		const DecodeState& state, length_type length)
+	{
+		auto old_begin = state.begin;
+		value.begin = &*old_begin;
+		base_der_decoder_type::decode_explicit(value.value, state, length);
+		value.end = value.begin + (state.begin - old_begin);
+	}
+
+	static constexpr void decode_implicit(length_type length,
+		with_pointers_value_type& value, const DecodeState& state)
+	{
+		auto old_begin = state.begin;
+		value.begin = &*old_begin;
+		base_der_decoder_type::decode_implicit(length, value.value, state);
+		value.end = value.begin + (state.begin - old_begin);
 	}
 };
 
