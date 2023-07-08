@@ -447,6 +447,9 @@ template<std::forward_iterator BufferIterator,
 	std::sentinel_for<BufferIterator> BufferIteratorEnd = BufferIterator>
 struct [[nodiscard]] decode_state
 {
+	using iterator_type = BufferIterator;
+	using end_iterator_type = BufferIteratorEnd;
+
 	explicit decode_state(BufferIterator begin, BufferIteratorEnd end)
 		noexcept(noexcept(BufferIteratorEnd(end)))
 		: begin(begin)

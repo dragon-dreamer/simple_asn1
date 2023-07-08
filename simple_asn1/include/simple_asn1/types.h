@@ -153,4 +153,13 @@ template<typename Container>
 	}
 	return result;
 }
+
+template<typename BufferIterator, typename Value>
+struct with_offset
+{
+	Value value;
+	BufferIterator begin;
+	BufferIterator end;
+};
+
 } //namespace asn1

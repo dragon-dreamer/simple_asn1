@@ -94,6 +94,42 @@ struct der_decoder
 	}
 };
 
+template<typename DecodeState, typename Options,
+	typename ParentContexts, typename Spec, typename Value>
+struct select_nested_der_decoder
+	: der_decoder<DecodeState, Options, ParentContexts, Spec, Value> {};
+
+template<typename DecodeState, typename Options,
+	typename ParentContexts, typename Spec, typename Iterator, typename Value>
+struct select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
+	with_offset<Iterator, Value>>
+{
+	using base_der_decoder_type = select_nested_der_decoder<DecodeState, Options, ParentContexts, Spec,
+		Value>;
+	using with_offset_value_type = with_offset<Iterator, Value>;
+
+	static constexpr bool can_decode(tag_type tag)
+	{
+		return base_der_decoder_type::can_decode(tag);
+	}
+
+	static constexpr void decode_explicit(with_offset_value_type& value,
+		const DecodeState& state, length_type length)
+	{
+		value.begin = state.begin;
+		base_der_decoder_type::decode_explicit(value.value, state, length);
+		value.end = state.begin;
+	}
+
+	static constexpr void decode_implicit(length_type length,
+		with_offset_value_type& value, const DecodeState& state)
+	{
+		value.begin = state.begin;
+		base_der_decoder_type::decode_implicit(length, value.value, state);
+		value.end = state.begin;
+	}
+};
+
 template<typename Decoder>
 struct der_decoder_base final {};
 
@@ -266,7 +302,7 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 	using merged_specs = typename Options::template
 		merge_spec_names<ParentContexts,
 			spec::tagged_with_options<Tag, Encoding, Class, SpecOptions, Spec>>;
-	using nested_decoder_type = der_decoder<DecodeState, Options, merged_specs,
+	using nested_decoder_type = select_nested_der_decoder<DecodeState, Options, merged_specs,
 		Spec, Value>;
 
 	static void decode_implicit_impl(length_type len, Value& value,
@@ -390,7 +426,7 @@ private:
 	static constexpr void add_decoders(child_decoder_list_type& decoders, bool& valid) noexcept
 	{
 		using child_type = typename TypeByIndex::template type<Index>;
-		using nested_decoder_type = der_decoder<DecodeState, Options,
+		using nested_decoder_type = select_nested_der_decoder<DecodeState, Options,
 			ParentContexts, Spec, child_type>;
 		constexpr auto child_decoder = TypeByIndex::template create_child_decoder<
 			Options, DecodeState, nested_decoder_type, ParentContexts, Spec, Index>();
@@ -550,7 +586,7 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 	spec::optional<Spec>, Value>
 	: der_decoder<DecodeState, Options, ParentContexts, Spec, typename ptr_traits<Value>::type>
 {
-	using nested_decoder_type = der_decoder<
+	using nested_decoder_type = select_nested_der_decoder<
 		DecodeState, Options, ParentContexts, Spec, typename ptr_traits<Value>::type>;
 
 	static void decode_explicit(Value& value,
@@ -591,7 +627,7 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 	spec::optional_default<DefaultValueProvider, Spec>, Value>
 	: der_decoder<DecodeState, Options, ParentContexts, Spec, Value>
 {
-	using nested_decoder_type = der_decoder<
+	using nested_decoder_type = select_nested_der_decoder<
 		DecodeState, Options, ParentContexts, Spec, Value>;
 
 	static void decode_explicit(Value& value,
@@ -655,7 +691,7 @@ private:
 	{
 		auto& field = boost::pfr::get<Index>(value);
 		using optional_traits_type = optional_traits<Spec>;
-		using nested_decoder_type = der_decoder<DecodeState, Options,
+		using nested_decoder_type = select_nested_der_decoder<DecodeState, Options,
 			this_parent_spec, Spec, std::remove_cvref_t<decltype(field)>>;
 		using merged_specs = typename Options::template
 			merge_spec_names<this_parent_spec, Spec>;
@@ -712,7 +748,7 @@ struct sequence_of_der_decoder
 	: der_decoder_base<der_decoder<DecodeState, Options,
 		ParentContexts, SequenceOf<SpecOptions, Spec>, Value>>
 {
-	using nested_decoder_type = der_decoder<DecodeState, Options,
+	using nested_decoder_type = select_nested_der_decoder<DecodeState, Options,
 		typename Options::template merge_spec_names<ParentContexts, SequenceOf<SpecOptions, Spec>>,
 		Spec, typename Value::value_type>;
 	using merged_specs = typename Options::template
@@ -953,7 +989,7 @@ private:
 			if constexpr (spec_traits<Spec>::is_choice)
 			{
 				using child_type = boost::pfr::tuple_element_t<Index, Value>;
-				using nested_decoder_type = der_decoder<DecodeState, Options,
+				using nested_decoder_type = select_nested_der_decoder<DecodeState, Options,
 					this_parent_specs, Spec, child_type>;
 				if (!decoded_tags.is_marked(nested_decoder_type::contained_tag_list[0]))
 					Spec::assign_default(boost::pfr::get<Index>(value));
@@ -1480,7 +1516,7 @@ struct der_decoder<DecodeState, Options, ParentContexts, RecursiveWrapper, Value
 {
 	using first_spec_name = typename first_spec_name_helper<ParentContexts>::type;
 	using spec_type = typename RecursiveWrapper::type;
-	using decoder_impl_type = der_decoder<DecodeState, Options, first_spec_name,
+	using decoder_impl_type = select_nested_der_decoder<DecodeState, Options, first_spec_name,
 		spec_type, typename ptr_traits<Value>::type>;
 
 	[[nodiscard]]
@@ -1538,7 +1574,7 @@ template<typename Spec, typename DecodeOptions,
 	std::sentinel_for<BufferIterator> BufferIteratorEnd, typename T>
 BufferIterator decode(decode_state<BufferIterator, BufferIteratorEnd>& state, T& result)
 {
-	using decoder_type = detail::der::der_decoder<decltype(state),
+	using decoder_type = detail::der::select_nested_der_decoder<decltype(state),
 		DecodeOptions, asn1::detail::parent_context_list<>, Spec, T>;
 
 	decoder_type::decode_explicit(result, state, std::distance(state.begin, state.end));
@@ -1575,7 +1611,7 @@ BufferIterator decode(
 	decode_state_with_recursion_depth_limit<BufferIterator, BufferIteratorEnd>& state,
 	T& result)
 {
-	using decoder_type = detail::der::der_decoder<decltype(state),
+	using decoder_type = detail::der::select_nested_der_decoder<decltype(state),
 		DecodeOptions, asn1::detail::parent_context_list<>, Spec, T>;
 
 	decoder_type::decode_explicit(result, state, std::distance(state.begin, state.end));
