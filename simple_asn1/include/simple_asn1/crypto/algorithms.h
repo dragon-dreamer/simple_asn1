@@ -34,4 +34,15 @@ constexpr auto id_dh_public_number = id_ansi_x9_42<2, 1>;
 constexpr auto id_rsa = std::to_array<std::uint32_t>({
 	1, 2, 840, 113549, 1, 1, 1 });
 } //namespace pki
+
+namespace hash
+{
+constexpr auto id_sha1 = std::to_array<std::uint32_t>({
+	1u, 3u, 14u, 3u, 2u, 26u });
+constexpr auto id_sha256 = std::to_array<std::uint32_t>({
+	2u, 16u, 840u, 1u, 101u, 3u, 4u, 2u, 1u });
+constexpr auto id_md5 = std::to_array<std::uint32_t>({
+	1u, 2u, 840u, 113549u, 2u, 5u });
+} //namespace hash
+
 } //namespace asn1::crypto
