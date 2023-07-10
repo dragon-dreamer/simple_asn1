@@ -47,7 +47,7 @@ struct signer_info
 	std::int32_t version;
 	issuer_and_serial_number<RangeType> issuer_and_sn;
 	algorithm_identifier<RangeType> digest_algorithm;
-	std::optional<attributes_type<RangeType>> authenticated_attributes;
+	std::optional<with_raw_data<RangeType, attributes_type<RangeType>>> authenticated_attributes;
 	algorithm_identifier<RangeType> digest_encryption_algorithm;
 	RangeType encrypted_digest;
 	std::optional<attributes_type<RangeType>> unauthenticated_attributes;

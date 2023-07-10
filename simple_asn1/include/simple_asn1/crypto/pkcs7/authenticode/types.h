@@ -53,8 +53,8 @@ struct digest_info
 template<typename RangeType>
 struct spc_indirect_data_content
 {
-	spc_attribute_type_and_optional_value<RangeType> type_value;
-	digest_info<RangeType> digest;
+	with_raw_data<RangeType, spc_attribute_type_and_optional_value<RangeType>> type_value;
+	with_raw_data<RangeType, digest_info<RangeType>> digest;
 };
 
 template<typename RangeType>
@@ -65,6 +65,5 @@ struct encap_content_info
 };
 
 template<typename RangeType>
-using content_info = content_info_base<with_raw_data<RangeType,
-	encap_content_info<RangeType>>, RangeType>;
+using content_info = content_info_base<encap_content_info<RangeType>, RangeType>;
 } //namespace asn1::crypto::pkcs7::authenticode
