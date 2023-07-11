@@ -27,7 +27,7 @@ using extended_certificates_and_certificates_type
 template<typename RangeType>
 struct issuer_and_serial_number
 {
-	name_type<RangeType> issuer;
+	with_raw_data<RangeType, name_type<RangeType>> issuer;
 	RangeType serial_number;
 };
 

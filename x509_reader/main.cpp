@@ -710,7 +710,7 @@ int main(int argc, const char* argv[]) try
     std::cout << '\n';
     print_serial_number(std::cout, result.tbs_cert.serial_number);
     std::cout << "Issuer: \n";
-    format_names(std::cout, result.tbs_cert.issuer);
+    format_names(std::cout, result.tbs_cert.issuer.value);
     std::cout << "\nSubject: \n";
     format_names(std::cout, result.tbs_cert.subject);
     print_extensions(std::cout, result.tbs_cert.extensions);

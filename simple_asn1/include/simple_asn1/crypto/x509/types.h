@@ -41,7 +41,7 @@ struct tbs_certificate
 	std::int32_t version;
 	RangeType serial_number;
 	algorithm_identifier<RangeType> signature;
-	name_type<RangeType> issuer;
+	with_raw_data<RangeType, name_type<RangeType>> issuer;
 	validity valid;
 	name_type<RangeType> subject;
 	subject_public_key_info<RangeType> pki;
