@@ -6,6 +6,7 @@
 #include <optional>
 #include <string>
 #include <variant>
+#include <vector>
 
 #include "simple_asn1/crypto/crypto_common_types.h"
 #include "simple_asn1/crypto/pkcs7/types.h"
@@ -42,6 +43,17 @@ struct spc_attribute_type_and_optional_value
 	object_identifier_type type;
 	spc_pe_image_data<RangeType> value;
 };
+
+template<typename RangeType>
+struct spc_attribute_page_hashes
+{
+	object_identifier_type type;
+	std::vector<RangeType> hashes;
+};
+
+template<typename RangeType>
+using spc_attribute_page_hashes_set
+	= std::vector<spc_attribute_page_hashes<RangeType>>;
 
 template<typename RangeType>
 struct digest_info

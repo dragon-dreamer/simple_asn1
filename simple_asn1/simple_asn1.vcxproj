@@ -154,8 +154,10 @@
     <ClInclude Include="include\simple_asn1\crypto\algorithms.h" />
     <ClInclude Include="include\simple_asn1\crypto\crypto_common_spec.h" />
     <ClInclude Include="include\simple_asn1\crypto\crypto_common_types.h" />
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\authenticode\oids.h" />
     <ClInclude Include="include\simple_asn1\crypto\pkcs7\authenticode\spec.h" />
     <ClInclude Include="include\simple_asn1\crypto\pkcs7\authenticode\types.h" />
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\oids.h" />
     <ClInclude Include="include\simple_asn1\crypto\pkcs7\spec.h" />
     <ClInclude Include="include\simple_asn1\crypto\pkcs7\types.h" />
     <ClInclude Include="include\simple_asn1\crypto\x509\extensions_spec.h" />

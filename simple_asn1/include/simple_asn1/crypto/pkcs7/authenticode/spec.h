@@ -58,6 +58,17 @@ using spc_attribute_type_and_optional_value = sequence_with_options<
 	spc_pe_image_data
 >;
 
+using spc_attribute_page_hashes = set_of_with_options<
+	opts::named<"SpcAttributePageHashes">,
+	sequence_with_options<
+		opts::named<"SpcAttributePageHashes">,
+		object_identifier<opts::named<"type">>,
+		set_of_with_options<opts::named<"hashes">,
+			octet_string<opts::named<"hashes">>
+		>
+	>
+>;
+
 using digest_info = sequence_with_options<
 	opts::named<"DigestInfo">,
 	algorithm_identifier<"digestAlgorithm">,
