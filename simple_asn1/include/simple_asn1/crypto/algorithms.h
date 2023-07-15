@@ -41,6 +41,10 @@ constexpr auto id_sha1 = std::to_array<std::uint32_t>({
 	1u, 3u, 14u, 3u, 2u, 26u });
 constexpr auto id_sha256 = std::to_array<std::uint32_t>({
 	2u, 16u, 840u, 1u, 101u, 3u, 4u, 2u, 1u });
+constexpr auto id_sha384 = std::to_array<std::uint32_t>({
+	2u, 16u, 840u, 1u, 101u, 3u, 4u, 2u, 2u });
+constexpr auto id_sha512 = std::to_array<std::uint32_t>({
+	2u, 16u, 840u, 1u, 101u, 3u, 4u, 2u, 3u });
 constexpr auto id_md5 = std::to_array<std::uint32_t>({
 	1u, 2u, 840u, 113549u, 2u, 5u });
 } //namespace hash
