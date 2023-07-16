@@ -69,6 +69,18 @@ using spc_attribute_page_hashes = set_of_with_options<
 	>
 >;
 
+using spc_sp_opus_info = sequence_with_options<
+	opts::named<"DigestInfo">,
+	spec::optional<tagged_with_options<0, encoding::expl, cls::context_specific,
+		opts::named<"programName">,
+		spc_string>
+	>,
+	spec::optional<tagged_with_options<1, encoding::expl, cls::context_specific,
+		opts::named<"moreInfo">,
+		spc_link>
+	>
+>;
+
 using digest_info = sequence_with_options<
 	opts::named<"DigestInfo">,
 	algorithm_identifier<"digestAlgorithm">,

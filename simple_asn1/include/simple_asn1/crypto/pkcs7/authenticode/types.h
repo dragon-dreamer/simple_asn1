@@ -56,6 +56,13 @@ using spc_attribute_page_hashes_set
 	= std::vector<spc_attribute_page_hashes<RangeType>>;
 
 template<typename RangeType>
+struct spc_sp_opus_info
+{
+	std::optional<spc_string_type> program_name;
+	std::optional<spc_link_type<RangeType>> more_info;
+};
+
+template<typename RangeType>
 struct digest_info
 {
 	algorithm_identifier<RangeType> digest_algorithm;
