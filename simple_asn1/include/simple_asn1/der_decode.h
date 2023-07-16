@@ -1113,8 +1113,15 @@ struct der_decoder<DecodeState, Options, ParentContexts, spec::bit_string<SpecOp
 		value.bit_count = len * std::numeric_limits<std::uint8_t>::digits;
 		if (unused_bits > value.bit_count)
 		{
-			error_helper<merged_specs>
-				::throw_with_context("Too many BIT STRING unused bits");
+			if constexpr (Options::parse_options_type::ignore_bit_string_invalid_unused_count)
+			{
+				unused_bits = static_cast<std::uint8_t>(value.bit_count);
+			}
+			else
+			{
+				error_helper<merged_specs>
+					::throw_with_context("Too many BIT STRING unused bits");
+			}
 		}
 
 		value.bit_count -= unused_bits;

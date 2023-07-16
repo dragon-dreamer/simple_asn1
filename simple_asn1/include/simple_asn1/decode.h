@@ -435,12 +435,20 @@ using no_context = detail::parent_context_list<>;
 } //namespace error_context_policy
 } //namespace decode_opts
 
+struct parse_options
+{
+	static constexpr bool ignore_bit_string_invalid_unused_count = false;
+};
+
 template<template <typename, typename> typename ExceptionContextPolicy
-	= decode_opts::error_context_policy::full_context>
+	= decode_opts::error_context_policy::full_context,
+	typename ParseOptions = parse_options>
 struct decode_options final
 {
 	template<typename ParentContexts, typename Spec>
 	using merge_spec_names = ExceptionContextPolicy<ParentContexts, Spec>;
+
+	using parse_options_type = ParseOptions;
 };
 
 template<std::forward_iterator BufferIterator,

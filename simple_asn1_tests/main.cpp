@@ -1457,6 +1457,37 @@ TYPED_TEST(Asn1TestFixture, ImplicitBitStringVector)
 		typename TestFixture::byte_type, 25, 26>{}.vec));
 }
 
+TYPED_TEST(Asn1TestFixture, ExplicitBitStringSpanTooManyUnusedBits)
+{
+	buffer_wrapper_base<typename TestFixture::byte_type, 3, 1, 1> wrapper;
+	asn1::bit_string<std::span<const typename TestFixture::byte_type>> value{};
+	EXPECT_THAT(([&]() { asn1::der::decode<asn1::spec::bit_string<asn1::opts::named<"bits">>>(
+		wrapper.vec.begin(), wrapper.vec.end(), value); }),
+		Throws<asn1::parse_error>(HasContext("bits")));
+}
+
+namespace
+{
+struct custom_bit_string_parse_options
+{
+	static constexpr bool ignore_bit_string_invalid_unused_count = true;
+};
+} //namespace
+
+TYPED_TEST(Asn1TestFixture, ExplicitBitStringSpanTooManyUnusedBitsIgnore)
+{
+	buffer_wrapper_base<typename TestFixture::byte_type, 3, 1, 1> wrapper;
+	asn1::bit_string<std::span<const typename TestFixture::byte_type>> value{};
+
+	using custom_decode_options = asn1::decode_options<
+		asn1::decode_opts::error_context_policy::full_context, custom_bit_string_parse_options>;
+
+	ASSERT_NO_THROW((asn1::der::decode<asn1::spec::bit_string<>, custom_decode_options>(
+		wrapper.vec.begin(), wrapper.vec.end(), value)));
+	EXPECT_EQ(value.bit_count, 0u);
+	ASSERT_EQ(value.container.size(), 0u);
+}
+
 TYPED_TEST(Asn1TestFixture, ExplicitOidNoDecode)
 {
 	buffer_wrapper_base<typename TestFixture::byte_type,
