@@ -160,6 +160,7 @@
     <ClInclude Include="include\simple_asn1\crypto\pkcs7\oids.h" />
     <ClInclude Include="include\simple_asn1\crypto\pkcs7\spec.h" />
     <ClInclude Include="include\simple_asn1\crypto\pkcs7\types.h" />
+    <ClInclude Include="include\simple_asn1\crypto\pkcs9\oids.h" />
     <ClInclude Include="include\simple_asn1\crypto\x509\extensions_spec.h" />
     <ClInclude Include="include\simple_asn1\crypto\x509\extensions_types.h" />
     <ClInclude Include="include\simple_asn1\crypto\x509\spec.h" />

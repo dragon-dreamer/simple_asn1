@@ -28,6 +28,9 @@
     <Filter Include="Header Files\crypto\pkcs7\authenticode">
       <UniqueIdentifier>{fc0cddbf-99d4-4869-b346-05eafc3991a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\crypto\pkcs9">
+      <UniqueIdentifier>{aa2b209a-1ee3-4fd7-977f-675279739a5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\simple_asn1\decode.h">
@@ -86,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="include\simple_asn1\crypto\pkcs7\oids.h">
       <Filter>Header Files\crypto\pkcs7</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\pkcs9\oids.h">
+      <Filter>Header Files\crypto\pkcs9</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

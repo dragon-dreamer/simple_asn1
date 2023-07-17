@@ -45,4 +45,7 @@ constexpr std::array oid_nested_signature_attribute = std::to_array<std::uint32_
 constexpr std::array oid_spc_sp_opus_info = std::to_array<std::uint32_t>({
 	1u, 3u, 6u, 1u, 4u, 1u, 311u, 2u, 1u, 12u
 });
+constexpr std::array oid_spc_time_stamp_token = std::to_array<std::uint32_t>({
+	1u, 3u, 6u, 1u, 4u, 1u, 311u, 3u, 3u, 1u
+});
 } //namespace asn1::crypto::pkcs7::authenticode
