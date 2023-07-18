@@ -340,6 +340,12 @@ struct octet_string
 	, detail::spec_tag<0x04u>
 	, detail::spec_type<"OCTET STRING"> {};
 
+template<typename EncapsulatedSpec, typename Options = opts::options<>>
+struct octet_string_with
+	: detail::default_options_parser<Options>
+	, detail::spec_tag<0x04u>
+	, detail::spec_type<"OCTET STRING"> {};
+
 template<typename Options = opts::options<>>
 struct bit_string
 	: detail::default_options_parser<Options>

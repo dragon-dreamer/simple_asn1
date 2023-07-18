@@ -518,6 +518,27 @@ TYPED_TEST(Asn1TestFixture, TaggedAny)
 
 namespace
 {
+using tagged_choice = asn1::spec::tagged<4u, asn1::spec::encoding::expl, asn1::spec::cls::context_specific,
+	asn1::spec::choice<
+		asn1::spec::sequence_of<asn1::spec::integer<>>
+	>>;
+} //namespace
+//
+
+TYPED_TEST(Asn1TestFixture, TaggedChoice)
+{
+	buffer_wrapper_base<typename TestFixture::byte_type, 0xa4, 5, 0x30, 3, 2, 1, 5> wrapper;
+	std::variant<std::vector<std::int16_t>> value;
+	ASSERT_NO_THROW((asn1::der::decode<tagged_choice>(
+		wrapper.vec.begin(), wrapper.vec.end(), value)));
+
+	const auto& vec = std::get<std::vector<std::int16_t>>(value);
+	ASSERT_EQ(vec.size(), 1u);
+	EXPECT_EQ(vec[0], 5);
+}
+
+namespace
+{
 using int_bool_choice = asn1::spec::choice<asn1::spec::boolean<>, asn1::spec::integer<>>;
 } //namespace
 
@@ -1409,6 +1430,15 @@ TYPED_TEST(Asn1TestFixture, ExplicitOctetStringSpan)
 		wrapper.vec.begin(), wrapper.vec.end(), value)));
 	ASSERT_EQ(value.size(), 2u);
 	EXPECT_TRUE(std::equal(value.begin(), value.end(), wrapper.vec.begin() + 2u));
+}
+
+TYPED_TEST(Asn1TestFixture, ExplicitOctetStringWith)
+{
+	buffer_wrapper_base<typename TestFixture::byte_type, 4, 2, 2, 1, 3> wrapper;
+	int value{};
+	ASSERT_NO_THROW((asn1::der::decode<asn1::spec::octet_string_with<asn1::spec::integer<>>>(
+		wrapper.vec.begin(), wrapper.vec.end(), value)));
+	EXPECT_EQ(value, 3);
 }
 
 TYPED_TEST(Asn1TestFixture, ImplicitOctetStringVector)

@@ -923,7 +923,7 @@ struct set_type_by_index final
 		using merged_specs = typename Options::template
 			merge_spec_names<ParentContexts, Spec>;
 		return []([[maybe_unused]] tag_type tag, length_type len,
-			marked_tags& decoded_tags, std::size_t& required_count, Value& value,
+			marked_tags& decoded_tags, [[maybe_unused]] std::size_t& required_count, Value& value,
 			DecodeState& state) {
 			if constexpr (!optional_traits<Spec>::is_optional)
 				++required_count;
@@ -1083,6 +1083,27 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 	{
 		value = Value{ state.begin, state.begin + len };
 		state.begin += len;
+	}
+};
+
+template<typename DecodeState,
+	typename Options, typename ParentContexts, typename SpecOptions,
+	typename EncapsulatedSpec, typename Value>
+struct der_decoder<DecodeState, Options, ParentContexts,
+	spec::octet_string_with<EncapsulatedSpec, SpecOptions>, Value>
+	: der_decoder_base<der_decoder<DecodeState, Options, ParentContexts,
+		spec::octet_string_with<EncapsulatedSpec, SpecOptions>, Value>>
+{
+	static constexpr const char* length_decode_error_text = "Expected OCTET STRING";
+
+	using nested_decoder_type = select_nested_der_decoder<DecodeState, Options,
+		ParentContexts, EncapsulatedSpec, Value>;
+
+	static void decode_implicit_impl(length_type len, Value& value,
+		DecodeState& state)
+	{
+		//TODO: check all data consumed
+		nested_decoder_type::decode_explicit(value, state, len);
 	}
 };
 
