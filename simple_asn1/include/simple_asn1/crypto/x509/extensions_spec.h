@@ -50,7 +50,7 @@ using general_name = choice_with_options<
 		opts::named<"x400Address">,
 		or_address
 	>,
-	tagged_with_options<4u, encoding::impl, cls::context_specific,
+	tagged_with_options<4u, encoding::expl, cls::context_specific,
 		opts::named<"directoryName">,
 		name<"directoryName">
 	>,
