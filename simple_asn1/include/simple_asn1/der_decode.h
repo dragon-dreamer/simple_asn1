@@ -1123,8 +1123,7 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 	{
 		auto begin = state.begin;
 		nested_decoder_type::decode_explicit(value, state, len);
-		auto v = state.begin - begin;
-		if (state.begin - begin != len)
+		if (static_cast<length_type>(state.begin - begin) != len)
 		{
 			error_helper<merged_specs>
 				::throw_with_context("OCTET STRING encapsulated data is not fully consumed");
