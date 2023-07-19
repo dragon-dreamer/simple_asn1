@@ -1434,11 +1434,21 @@ TYPED_TEST(Asn1TestFixture, ExplicitOctetStringSpan)
 
 TYPED_TEST(Asn1TestFixture, ExplicitOctetStringWith)
 {
-	buffer_wrapper_base<typename TestFixture::byte_type, 4, 2, 2, 1, 3> wrapper;
+	buffer_wrapper_base<typename TestFixture::byte_type, 4, 3, 2, 1, 3> wrapper;
 	int value{};
 	ASSERT_NO_THROW((asn1::der::decode<asn1::spec::octet_string_with<asn1::spec::integer<>>>(
 		wrapper.vec.begin(), wrapper.vec.end(), value)));
 	EXPECT_EQ(value, 3);
+}
+
+TYPED_TEST(Asn1TestFixture, ExplicitOctetStringWithException)
+{
+	buffer_wrapper_base<typename TestFixture::byte_type, 4, 3, 3, 1, 3> wrapper;
+	int value{};
+	EXPECT_THAT(([&]() { asn1::der::decode<asn1::spec::octet_string_with<
+		asn1::spec::integer<asn1::opts::named<"int">>, asn1::opts::named<"str">>
+		>(wrapper.vec.begin(), wrapper.vec.end(), value); }),
+		Throws<asn1::parse_error>(HasExactContext("str/int")));
 }
 
 TYPED_TEST(Asn1TestFixture, ImplicitOctetStringVector)

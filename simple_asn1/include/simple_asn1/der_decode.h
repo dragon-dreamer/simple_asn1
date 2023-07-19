@@ -1112,14 +1112,23 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 {
 	static constexpr const char* length_decode_error_text = "Expected OCTET STRING";
 
+	using merged_specs = typename Options::template
+		merge_spec_names<ParentContexts, spec::octet_string_with<EncapsulatedSpec, SpecOptions>>;
+
 	using nested_decoder_type = select_nested_der_decoder<DecodeState, Options,
-		ParentContexts, EncapsulatedSpec, Value>;
+		merged_specs, EncapsulatedSpec, Value>;
 
 	static void decode_implicit_impl(length_type len, Value& value,
 		DecodeState& state)
 	{
-		//TODO: check all data consumed
+		auto begin = state.begin;
 		nested_decoder_type::decode_explicit(value, state, len);
+		auto v = state.begin - begin;
+		if (state.begin - begin != len)
+		{
+			error_helper<merged_specs>
+				::throw_with_context("OCTET STRING encapsulated data is not fully consumed");
+		}
 	}
 };
 
