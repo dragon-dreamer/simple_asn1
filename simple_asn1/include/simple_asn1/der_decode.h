@@ -24,7 +24,8 @@ namespace asn1::detail::der
 {
 template<typename DecodeState, auto Throw = default_throw>
 std::pair<tag_type, length_type> decode_type_length(
-	DecodeState& state)
+	DecodeState& state,
+	std::size_t* max_length = nullptr)
 {
 	static constexpr bool is_random_access_iterator
 		= RandomAccessIterator<decltype(state.begin)>;
@@ -37,6 +38,14 @@ std::pair<tag_type, length_type> decode_type_length(
 	{
 		if (state.begin == state.end)
 			Throw("No tag and length");
+	}
+
+	if (max_length)
+	{
+		if (*max_length < 2)
+			Throw("No tag and length");
+
+		*max_length -= 2;
 	}
 
 	auto tag = static_cast<tag_type>(*state.begin++);
@@ -52,6 +61,9 @@ std::pair<tag_type, length_type> decode_type_length(
 		if (length == 0xffu)
 			Throw("Invalid length");
 
+		if (max_length && length > *max_length)
+			Throw("Invalid length");
+
 		length = decode_integer<length_type,
 			DecodeState, Throw>(length & 0x7fu, state);
 	}
@@ -61,11 +73,12 @@ std::pair<tag_type, length_type> decode_type_length(
 
 template<typename Specs, typename DecodeState>
 std::pair<tag_type, length_type> decode_type_length_with_context(
-	DecodeState& state)
+	DecodeState& state,
+	std::size_t* max_length = nullptr)
 {
 	return decode_type_length<DecodeState, ([](const auto& message) {
 		error_helper<Specs>::throw_with_context(message);
-	})>(state);
+	})>(state, max_length);
 }
 
 template<typename DecodeState, typename Options,
@@ -230,7 +243,8 @@ struct der_decoder_base<der_decoder<DecodeState, Options, ParentContexts, Spec, 
 	{
 		using merged_specs = typename Options
 			::template merge_spec_names<ParentContexts, Spec>;
-		auto [tag, len] = decode_type_length_with_context<merged_specs>(state);
+		auto [tag, len] = decode_type_length_with_context<merged_specs>(state,
+			&max_length);
 		if (!can_decode(tag))
 		{
 			error_helper<merged_specs>
@@ -395,7 +409,8 @@ struct der_decoder<DecodeState, Options, ParentContexts, spec::any<SpecOptions>,
 		using merged_specs = typename Options::template
 			merge_spec_names<ParentContexts, spec::any<SpecOptions>>;
 		auto begin = state.begin;
-		auto [tag, len] = decode_type_length_with_context<merged_specs>(state);
+		auto [tag, len] = decode_type_length_with_context<merged_specs>(state,
+			&max_length);
 		if (len > max_length)
 		{
 			error_helper<merged_specs>
@@ -437,7 +452,8 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 		while (max_length)
 		{
 			auto begin = state.begin;
-			auto [tag, len] = decode_type_length_with_context<merged_specs>(state);
+			auto [tag, len] = decode_type_length_with_context<merged_specs>(
+				state, &max_length);
 			if (len > max_length)
 			{
 				error_helper<merged_specs>
@@ -445,7 +461,7 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 			}
 
 			state.begin += len;
-			max_length -= (state.begin - begin);
+			max_length -= len;
 		}
 	}
 
@@ -583,7 +599,8 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 	static void decode_explicit(std::variant<Values...>& value,
 		DecodeState& state, length_type max_length)
 	{
-		auto [tag, len] = decode_type_length_with_context<this_parent_specs>(state);
+		auto [tag, len] = decode_type_length_with_context<this_parent_specs>(
+			state, &max_length);
 		if (len > max_length)
 		{
 			error_helper<this_parent_specs>
@@ -1003,9 +1020,8 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 		std::size_t decoded_required_count{};
 		while (len)
 		{
-			auto begin = state.begin;
 			auto [tag, child_len] = decode_type_length_with_context<
-				this_parent_specs>(state);
+				this_parent_specs>(state, &len);
 
 			if (child_len > len)
 			{
@@ -1022,7 +1038,7 @@ struct der_decoder<DecodeState, Options, ParentContexts,
 
 			child_decoder(tag, child_len, decoded_tags,
 				decoded_required_count, value, state);
-			len -= state.begin - begin;
+			len -= child_len;
 		}
 
 		static constexpr auto required_field_count = (... + static_cast<std::size_t>(
