@@ -31,6 +31,12 @@
     <Filter Include="Header Files\crypto\pkcs9">
       <UniqueIdentifier>{aa2b209a-1ee3-4fd7-977f-675279739a5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\crypto\tst">
+      <UniqueIdentifier>{9304f6e4-a4c2-4ab9-a455-57247e3cc967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\crypto\pkcs7\cms">
+      <UniqueIdentifier>{2b9fad60-24b6-4360-86fa-df66b9061e2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\simple_asn1\decode.h">
@@ -92,6 +98,18 @@
     </ClInclude>
     <ClInclude Include="include\simple_asn1\crypto\pkcs9\oids.h">
       <Filter>Header Files\crypto\pkcs9</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\tst\spec.h">
+      <Filter>Header Files\crypto\tst</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\tst\types.h">
+      <Filter>Header Files\crypto\tst</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\cms\spec.h">
+      <Filter>Header Files\crypto\pkcs7\cms</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simple_asn1\crypto\pkcs7\cms\types.h">
+      <Filter>Header Files\crypto\pkcs7\cms</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

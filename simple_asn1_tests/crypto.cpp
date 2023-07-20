@@ -5,12 +5,16 @@
 #include <span>
 #include <vector>
 
+#include "simple_asn1/der_decode.h"
 #include "simple_asn1/crypto/pkcs7/authenticode/spec.h"
 #include "simple_asn1/crypto/pkcs7/authenticode/oids.h"
 #include "simple_asn1/crypto/pkcs7/authenticode/types.h"
+#include "simple_asn1/crypto/pkcs7/cms/spec.h"
+#include "simple_asn1/crypto/pkcs7/cms/types.h"
 #include "simple_asn1/crypto/pkcs7/oids.h"
 #include "simple_asn1/crypto/pkcs9/oids.h"
-#include "simple_asn1/der_decode.h"
+#include "simple_asn1/crypto/tst/spec.h"
+#include "simple_asn1/crypto/tst/types.h"
 
 #include "gtest/gtest.h"
 
