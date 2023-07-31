@@ -161,10 +161,10 @@ struct signer_info
     std::int32_t version;
     signer_identifier_type<RangeType> sid;
     algorithm_identifier<RangeType> digest_algorithm;
-    std::optional<attributes_type<RangeType>> signed_attrs;
-    algorithm_identifier<RangeType> signature_algorithm;
-    RangeType signature;
-    std::optional<attributes_type<RangeType>> unsigned_attrs;
+    std::optional<with_raw_data<RangeType, attributes_type<RangeType>>> authenticated_attributes;
+    algorithm_identifier<RangeType> digest_encryption_algorithm;
+    RangeType encrypted_digest;
+    std::optional<attributes_type<RangeType>> unauthenticated_attributes;
 };
 
 template<typename RangeType>
