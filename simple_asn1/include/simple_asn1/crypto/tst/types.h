@@ -44,7 +44,7 @@ template<typename RangeType>
 struct encap_tst_info
 {
     object_identifier_type content_type;
-    tst_info<RangeType> info;
+    with_raw_data<RangeType, tst_info<RangeType>> info;
 };
 
 } //namespace asn1::crypto::tst
