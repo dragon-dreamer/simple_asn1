@@ -31,9 +31,10 @@ using extensions = sequence_of_with_options<opts::named<"extensions">,
 >;
 
 using tbs_certificate = sequence_with_options<opts::named<"TBSCertificate">,
-	tagged_with_options<0, encoding::expl, cls::context_specific, opts::named<"version">,
-		integer<opts::named<"version">>
-	>,
+	optional_default<default_value<1>,
+		tagged_with_options<0, encoding::expl, cls::context_specific, opts::named<"version">,
+			integer<opts::named<"version">>
+	>>,
 	integer<opts::named<"serialNumber">>,
 	algorithm_identifier<"signature">,
 	name<"issuer">,
